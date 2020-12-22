@@ -14,7 +14,8 @@
     "firebase-admin": "^9.4.2",
     "knex": "^0.21.14",
     "mysql2": "^2.2.5",
-    "objection": "^2.2.3"
+    "objection": "^2.2.3",
+    "twilio": "^3.54.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

@@ -1,11 +1,12 @@
+require("dotenv").config()
 const path = require("path")
-
-
 const admin = require("firebase-admin")
+
+const chunk = require("../helpers/chunk")
 
 const pathToServiceAccount = path.resolve(process.env.FIREBASE_SERVICE_ACCOUNT_PATH || "")
 const serviceAccount = require(pathToServiceAccount)
-require("dotenv").config()
+
 
 
 admin.initializeApp({
@@ -13,19 +14,11 @@ admin.initializeApp({
     databaseURL: process.env.FIREBASE_DB_PATH
 })
 
-// You can specify up to 100 device registration tokens (500 for Java and Node.js) per invocation
-const chunk = tokens => {
-    const _chunkSize = 450
-    const chunks = []
-    for (let i = 0; i < tokens.length; i += _chunkSize) {
-        chunks.push(tokens.slice(i, i + _chunksize))
-    }
-    return chunks
-}
 
 // message is an object contains { notification } notification => {title,body}
-const send_notification = async (message, registrationTokens) => {
+const sendNotification = async (message, registrationTokens) => {
     try {
+        // You can specify up to 100 device registration tokens (500 for Java and Node.js) per invocation
         const chunks = chunk(registrationTokens)
         const promises = []
         for (const tokens of chunks) {
@@ -55,4 +48,4 @@ const _sendPushNotification = async message => {
     }
 }
 
-module.exports = send_notification
+module.exports = sendNotification
