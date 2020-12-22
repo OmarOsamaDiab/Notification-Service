@@ -1,0 +1,44 @@
+version: "3.7"
+
+volumes:
+  datavolume:
+    driver: local
+
+services:
+  node:
+    image: node:14
+    depends_on: 
+      - database
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    command: ["npm", "start"]
+    environment:
+      NODE_ENV: development
+      DOMAIN: localhost:3030
+      MYSQL_USERNAME: user
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: user
+      MYSQL_HOST: database 
+
+
+  database:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - datavolume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: user
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
