@@ -2,7 +2,7 @@ exports.up = function (knex) {
     return knex.schema
         .createTable("notification", (table) => {
             table.increments('id').primary()
-            table.text("notification").nullable()
+            table.text("message").nullable()
             table.timestamps(true, true)
         });
 };
