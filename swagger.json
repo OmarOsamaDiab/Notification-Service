@@ -1,0 +1,77 @@
+{
+    "swagger":"2.0",
+    "info":{
+       "version":"1.0.0",
+       "title":"notifications task",
+       "description":"My notification service Application API"
+    },
+    "host":"localhost:3000",
+    "basePath":"/",
+    "tags":[
+       {
+          "name":"Users",
+          "description":"API for sending notifications to users in the system"
+       }
+    ],
+    "schemes":[
+       "http"
+    ],
+    "consumes":[
+       "application/json"
+    ],
+    "produces":[
+       "application/json"
+    ],
+    "paths":{
+       "/notification/send":{
+          "post":{
+             "tags":[
+                "Notification"
+             ],
+             "description":"Create and Send new notification to users in system",
+             "parameters":[
+                {
+                   "name":"message",
+                   "in":"body",
+                   "type": "string",
+                   "required":true,
+                   "description":"the message we want to send it as a notification"
+                },
+                {
+                  "name":"userIds",
+                  "in":"body",
+                  "type": "array",
+                  "items":{
+                     "type":"integer"
+                  },
+                  "required":true,
+                  "description":"array of users ids we want to send this notification to them"
+               },
+                {
+                   "name":"notificationType",
+                   "in":"query",
+                   "type":"string",
+                   "description":"specify type of the notification {sms} or {app} default will be sent for both"
+                }
+             ],
+             "produces":[
+                "application/json"
+             ],
+             "responses":{
+                "201":{
+                   "description":"notification sent successfully"
+                },
+                "400":{
+                  "description":"bad request"
+                },
+                "404":{
+                  "description":"not found"   
+                },
+                "500":{
+                  "description":"Internal server error"      
+                }
+             }
+          }
+       }
+    }
+ }

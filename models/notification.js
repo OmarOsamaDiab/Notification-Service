@@ -10,4 +10,13 @@ class Notification extends Model {
 
 }
 
-module.exports = Notification
+const addNotification = async message => {
+    try {
+        const { id } = await Notification.query().insertAndFetch(message)
+        return id
+    } catch (e) {
+        return e
+    }
+}
+
+module.exports = { Notification, addNotification }

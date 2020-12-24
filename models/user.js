@@ -7,6 +7,7 @@ class User extends Model {
     static get tableName() {
         return 'user'
     }
+
     static get relationMappings() {
         return {
             notification: {
@@ -23,6 +24,22 @@ class User extends Model {
             },
         }
     }
+
+    static get modifiers() {
+        return {
+            userInfo: query => query.select('id', 'phone', 'notification_token')
+        }
+    }
 }
 
-module.exports = User
+const getUsersDetails = async ids => {
+    try {
+        const userDetails = await User.query().modify("userInfo").whereIn("id", ids).orderBy("id")
+        return userDetails
+    } catch (e) {
+        return e
+    }
+}
+
+
+module.exports = { User, getUsersDetails }

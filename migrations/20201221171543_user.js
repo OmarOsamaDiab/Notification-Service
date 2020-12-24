@@ -4,9 +4,6 @@ exports.up = function (knex) {
             table.increments('id').primary()
             table.string('notification_token').notNullable()
             table.string('phone').notNullable().unique()
-            table.enu('device', ['Andriod', 'ios'])
-                .defaultTo('Andriod')
-                .notNullable()
             table.timestamps(true, true)
         });
 };

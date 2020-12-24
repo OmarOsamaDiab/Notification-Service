@@ -1,9 +1,10 @@
+require("dotenv").config()
 // this function for spilting data into chunks
-const chunk = tokens => {
-    const _chunkSize = 450
+const chunk = data => {
+    const _chunkSize = process.env.CHUNK_SIZE
     const chunks = []
-    for (let i = 0; i < tokens.length; i += _chunkSize) {
-        chunks.push(tokens.slice(i, i + _chunksize))
+    for (let i = 0; i < data.length; i += _chunkSize) {
+        chunks.push(data.slice(i, i + _chunksize))
     }
     return chunks
 }
